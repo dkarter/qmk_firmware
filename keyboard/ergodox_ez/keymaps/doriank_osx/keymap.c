@@ -7,9 +7,9 @@
 #define MDIA 2 // media keys
 
 enum macros {
-  M_RSHFT = 0,
-  M_QUICK_COLN = 1,
-  M_STICKY_SHFT = 2
+  M_RSHFT,
+  M_QUICK_COLN,
+  M_STICKY_SHFT
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
