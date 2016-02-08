@@ -148,7 +148,8 @@ const uint16_t PROGMEM fn_actions[] = {
 static uint16_t semicolon_key_timer;
 static uint16_t semicolon_taps = 0;
 static uint16_t lshift_key_timer;
-static uint16_t lshift_taps = 0;
+static uint16_t lshift_taps  = 0;
+static uint16_t lshift_stuck = 0;
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
@@ -200,11 +201,18 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         if (lshift_taps == 1) {
           register_code(KC_LSFT);
         } else {
-          register_code(KC_CAPS);
-          unregister_code(KC_CAPS);
+          if (!lshift_stuck) {
+            lshift_stuck = 1;
+            register_code(KC_LSFT);
+          } else {
+            lshift_stuck = 0;
+            unregister_code(KC_LSFT);
+          }
         }
       } else {
-        unregister_code(KC_LSFT);
+        if (!lshift_stuck) {
+          unregister_code(KC_LSFT);
+        }
       }
       break;
   }
